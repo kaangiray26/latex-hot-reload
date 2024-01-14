@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Hot Reload for Latex
+# This script will watch for changes in the current directory
+# and recompile the latex file if any changes are detected.
+
+# Specify files here
+files=("main.tex" "particulars.tex" "utilities.tex")
+folder="template"
+
+# Change directory to the template folder
+cd $folder
+
+# Wait for changes in the files
+echo "Watching for changes in ${files[@]}..."
+inotifywait -q -m -e modify ${files[@]} | while read changed; do
+    echo "Recompiling..."
+    pdflatex main.tex > /dev/null
+done
