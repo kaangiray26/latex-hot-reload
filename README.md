@@ -7,5 +7,5 @@ This script will watch for changes in the current directory and recompile the la
 
 ## Usage
 ```
-latex
+./latex
 ```
