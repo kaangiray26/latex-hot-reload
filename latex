@@ -4,6 +4,23 @@
 # This script will watch for changes in the current directory
 # and recompile the latex file if any changes are detected.
 
+# Specify the lock file
+lockfile="/tmp/latex.lock"
+
+# Remove the lock file if it exists
+if [ -f $lockfile ]; then
+    rm $lockfile
+fi
+
+function build () {
+    # Print with timestamp
+    process=$(uuidgen)
+    echo "[$(date +%s)] [$process] Recompiling..."
+    pdflatex main.tex > /dev/null
+    echo "[$(date +%s)] [$process] Done."
+    rm $lockfile
+}
+
 # Specify files here
 files=("main.tex" "particulars.tex" "utilities.tex")
 folder="template"
@@ -14,6 +31,15 @@ cd $folder
 # Wait for changes in the files
 echo "Watching for changes in ${files[@]}..."
 inotifywait -q -m -e modify ${files[@]} | while read changed; do
-    echo "Recompiling..."
-    pdflatex main.tex > /dev/null
+    
+    # Check for lock file and continue if found
+    if [ -f $lockfile ]; then
+        continue
+    fi
+
+    # Create lock file
+    touch $lockfile
+
+    # Build the file
+    build &
 done
