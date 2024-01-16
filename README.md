@@ -8,6 +8,11 @@ This script will watch for changes in the current directory and recompile the la
 * inotify-tools
 * pdflatex
 
+##  Installation
+```
+curl -o latex https://kaangiray26.github.io/latex-hot-reload/latex
+```
+
 ## Usage
 ```
 ./latex
