@@ -11,6 +11,7 @@ This script will watch for changes in the current directory and recompile the la
 ##  Installation
 ```
 curl -o latex https://kaangiray26.github.io/latex-hot-reload/latex
+chmod +x latex
 ```
 
 ## Usage
